@@ -56,6 +56,7 @@ public class ClientDAO implements IClient {
             stmt.setString(4, client.getEmail());
             stmt.setString(5, client.getTelephone());
             stmt.setDate(6, Date.valueOf(client.getDateInscription()));
+
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
