@@ -42,7 +42,10 @@ CREATE TABLE billets (
                          prixVente DECIMAL,
                          dateVente TIMESTAMP,
                          statutBillet VARCHAR(50) CHECK (statutBillet IN ('vendu', 'annule', 'enattente')),
-                         contrat_id UUID REFERENCES contrats(id) ON DELETE CASCADE
+                         contrat_id UUID REFERENCES contrats(id) ON DELETE CASCADE,
+                         depart VARCHAR(50) ,
+                         destination VARCHAR(50),
+                         distance DECIMAL
 );
 
 CREATE TABLE clients (
