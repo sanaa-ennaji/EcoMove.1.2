@@ -43,12 +43,14 @@ CREATE TABLE billets (
                          prixVente DECIMAL,
                          dateVente TIMESTAMP,
                          statutBillet VARCHAR(50) CHECK (statutBillet IN ('vendu', 'annule', 'enattente')),
-                         contrat_id UUID REFERENCES contrats(id) ON DELETE CASCADE
+                         contrat_id UUID REFERENCES contrats(id) ON DELETE CASCADE,
+                         depart VARCHAR(50) ,
+                         destination VARCHAR(50),
+                         distance DECIMAL
 );
 
 CREATE TABLE clients (
-
-    id UUID KEY DEFAULT gen_random_uuid,
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid,
     nom VARCHAR(255) NOT NULL ,
     prenom VARCHAR(255) NOT NULL,
     email VARCHAR (255)  UNIQUE NOT NULL ,
@@ -56,7 +58,7 @@ CREATE TABLE clients (
 );
 
 CREATE TABLE reservation (
-     id UUID KEY DEFAULT gen_random_uuid,
+     id UUID PRIMARY KEY DEFAULT gen_random_uuid,
      client_id REFERENCES clients(id)  NO DELETE CASCADE ,
      DateReservation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
      statutReservation VARCHAR(50) CHECK (statuReservation IN ('confirmee', 'annulee', 'enattente') )
@@ -64,6 +66,6 @@ CREATE TABLE reservation (
 
 CREATE TABLE reservation_billets (
   reservation_id UUID REFERENCES reservation(id) ON DELETE CASCADE ,
-  billet_id UUID REFERENCES billets(id) ON DELETE CASCADE ?
+  billet_id UUID REFERENCES billets(id) ON DELETE CASCADE ,
   PRIMARY KEY  (reservation_id , billet_id)
 );

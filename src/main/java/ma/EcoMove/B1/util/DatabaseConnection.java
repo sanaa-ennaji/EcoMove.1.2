@@ -10,7 +10,7 @@ public class DatabaseConnection {
 
     private DatabaseConnection() {
         try {
-            this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/EcoMove", "postgres", "password");
+            this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/ecomove2", "postgres", "password");
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
             e.printStackTrace();
