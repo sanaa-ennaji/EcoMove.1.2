@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +24,6 @@ public class ClientDAO implements IClient {
     @Override
     public Optional<Client> findByEmail(String email) {
         String query = "SELECT * FROM clients WHERE email = ?";
-
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, email);
             ResultSet rs = stmt.executeQuery();
@@ -35,7 +35,7 @@ public class ClientDAO implements IClient {
                         rs.getString("email"),
                         rs.getString("telephone"),
                         rs.getDate("dateInscription").toLocalDate(),
-                        reservations
+                        new ArrayList<>()
 
                 );
                 return Optional.of(client);

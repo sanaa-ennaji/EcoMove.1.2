@@ -1,6 +1,7 @@
 package main.java.ma.EcoMove.B1.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,8 +27,7 @@ public class Client {
         this.email = email ;
         this.telephone = telephone ;
         this.dateInscription = dateInscription ;
-//        this.reservation = new ArrayList<Reservation>();
-        this.reservations = reservations;
+        this.reservations = new ArrayList<>();
 
     }
 
