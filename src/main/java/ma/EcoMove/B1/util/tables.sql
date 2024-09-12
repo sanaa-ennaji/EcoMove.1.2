@@ -1,6 +1,5 @@
-
 CREATE DATABASE EcoMove;
-\c EcoMove;
+
 CREATE TABLE partenaires (
                              id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                              nomCompagnie VARCHAR(255) NOT NULL,
@@ -43,29 +42,27 @@ CREATE TABLE billets (
                          prixVente DECIMAL,
                          dateVente TIMESTAMP,
                          statutBillet VARCHAR(50) CHECK (statutBillet IN ('vendu', 'annule', 'enattente')),
-                         contrat_id UUID REFERENCES contrats(id) ON DELETE CASCADE,
-                         depart VARCHAR(50) ,
-                         destination VARCHAR(50),
-                         distance DECIMAL
+                         contrat_id UUID REFERENCES contrats(id) ON DELETE CASCADE
 );
 
 CREATE TABLE clients (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid,
-    nom VARCHAR(255) NOT NULL ,
-    prenom VARCHAR(255) NOT NULL,
-    email VARCHAR (255)  UNIQUE NOT NULL ,
-    phoneNumber VARCHAR(15)
+                         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                         nom VARCHAR(255) NOT NULL,
+                         prenom VARCHAR(255) NOT NULL,
+                         email VARCHAR(255) UNIQUE NOT NULL,
+                         telephone VARCHAR(20),
+                         dateInscription DATE DEFAULT CURRENT_DATE
 );
 
-CREATE TABLE reservation (
-     id UUID PRIMARY KEY DEFAULT gen_random_uuid,
-     client_id REFERENCES clients(id)  NO DELETE CASCADE ,
-     DateReservation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-     statutReservation VARCHAR(50) CHECK (statuReservation IN ('confirmee', 'annulee', 'enattente') )
+CREATE TABLE reservations (
+                              id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                              client_id UUID REFERENCES clients(id) ON DELETE CASCADE,
+                              dateReservation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                              statutReservation VARCHAR(50) CHECK (statutReservation IN ('confirmee', 'annulee', 'enattente'))
 );
 
 CREATE TABLE reservation_billets (
-  reservation_id UUID REFERENCES reservation(id) ON DELETE CASCADE ,
-  billet_id UUID REFERENCES billets(id) ON DELETE CASCADE ,
-  PRIMARY KEY  (reservation_id , billet_id)
+                                     reservation_id UUID REFERENCES reservations(id) ON DELETE CASCADE,
+                                     billet_id UUID REFERENCES billets(id) ON DELETE CASCADE,
+                                     PRIMARY KEY (reservation_id, billet_id)
 );
