@@ -23,15 +23,38 @@ public class ClientUI {
         if (clientOpt.isPresent()){
             System.out.println("welcome back ," + clientOpt.get().getNom() + clientOpt.get().getPrenom());
 
-        }else{
+        }else {
             System.out.println("Not found 404");
             System.out.println("would you like to create an account ? (y/n):");
             String response = scanner.nextLine();
-            if(response.equalsIgnoreCase("y")){
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("nom");
+                String nom = scanner.nextLine();
+
+                System.out.println("prenom");
+                String prenom = scanner.nextLine();
+
+                System.out.print("phone number");
+                String telephone = scanner.nextLine();
+
+                Client newClient = new Client();
+                newClient.setNom(nom);
+                newClient.setPrenom(prenom);
+                newClient.setEmail(email);
+                newClient.setTelephone(telephone);
+
+                clientService.registerClient(newClient);
+
+                System.out.println("account created");
+
+
+            } else {
+
+                System.out.println("exist");
+
 
             }
         }
-
 
     }
 
