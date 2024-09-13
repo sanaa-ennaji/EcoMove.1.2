@@ -18,15 +18,15 @@ public class ClientUI {
 
     public void login (){
         System.out.println("--------------Client Login ----------------");
-        System.out.println("your email sir:");
-        String email = scanner.nextLine();
+        System.out.print("enter your email to login: ");
+        String email = scanner.nextLine().trim();
         Optional<Client> clientOpt = clientService.findByEmail(email);
         if (clientOpt.isPresent()){
             System.out.println("welcome back ," + clientOpt.get().getNom() + clientOpt.get().getPrenom());
 
         }else {
             System.out.println("Not found 404");
-            System.out.println("would you like to create an account ? (y/n):");
+            System.out.print("would you like to create an account ? (Y/N): ");
             String response = scanner.nextLine();
             if (response.equalsIgnoreCase("y")) {
                 registerClient();
@@ -34,7 +34,7 @@ public class ClientUI {
 
             } else {
 
-                System.out.println("exist");
+                System.out.println("exit");
 
 
             }
@@ -43,15 +43,15 @@ public class ClientUI {
     }
 
     private void registerClient() {
-        System.out.print("email");
+        System.out.print("email: ");
         String email = scanner.nextLine();
-        System.out.println("nom");
+        System.out.print("nom: ");
         String nom = scanner.nextLine();
 
-        System.out.println("prenom");
+        System.out.print("prenom: ");
         String prenom = scanner.nextLine();
 
-        System.out.println("phone number");
+        System.out.print("phone number: ");
         String telephone = scanner.nextLine();
 
 
