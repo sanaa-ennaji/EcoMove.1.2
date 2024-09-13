@@ -59,13 +59,13 @@ public class ContratDAO implements IContrat {
         return contrats;
     }
 
-
     @Override
     public void updateContrat(Contrat contrat) throws SQLException {
         Contrat existingContrat = findContratById(contrat.getId());
         if (existingContrat == null) {
             throw new SQLException("Contrat with ID " + contrat.getId() + " not found.");
         }
+
 
         String sql = "UPDATE contrats SET dateDebut = ?, dateFin = ?, tarifSpecial = ?, conditionsAccord = ?, renouvelable = ?, statutContrat = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -123,7 +123,6 @@ public class ContratDAO implements IContrat {
         contrat.setPartenaire(partenaire);
         return contrat;
     }
-
 
 
 }
