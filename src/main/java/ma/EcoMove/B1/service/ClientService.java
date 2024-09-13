@@ -28,7 +28,7 @@ public class ClientService  implements IClientService {
                     prenom,
                     email,
                     telephone,
-                    dateInscription, 
+                    dateInscription,
                     Collections.emptyList()
 
 
