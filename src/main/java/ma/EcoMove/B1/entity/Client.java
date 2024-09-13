@@ -2,6 +2,7 @@ package main.java.ma.EcoMove.B1.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,7 +28,7 @@ public class Client {
         this.email = email ;
         this.telephone = telephone ;
         this.dateInscription = dateInscription ;
-        this.reservations = new ArrayList<>();
+        this.reservations = reservations == null ? Collections.emptyList() : reservations;
 
     }
 
@@ -37,7 +38,7 @@ public class Client {
     public String getEmail () {return email ;}
     public String getTelephone () {return telephone ;}
     public LocalDate getDateInscription () {return dateInscription ;}
-    public List<Reservation> getReservations () {return reservations ;}
+    public List<Reservation> getReservations () { return Collections.unmodifiableList(reservations); }
     public void setId (UUID id ) {this.id = id;}
     public void setNom (String nom) {this.nom = nom;}
     public void setPrenom(String prenom) {this.prenom = prenom;}
