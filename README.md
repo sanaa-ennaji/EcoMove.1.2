@@ -1,6 +1,7 @@
 # EcoMove1.2
 
 ## Brief 2
+![alt text](https://github.com/sanaa-ennaji/EcoMovee/blob/main/assets/ECO2%2FECO2.drawio.png)
 
 **Titre:** Module de gestion des clients et des réservations de la plateforme EcoMove  
 **Description rapide:** Module de gestion des clients et des réservations de la plateforme EcoMove
