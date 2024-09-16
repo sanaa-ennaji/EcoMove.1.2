@@ -1,7 +1,6 @@
 package main.java.ma.EcoMove.B1.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;

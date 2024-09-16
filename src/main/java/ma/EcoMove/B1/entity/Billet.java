@@ -5,6 +5,7 @@ import main.java.ma.EcoMove.B1.enums.StatutBillet;
 import java.util.UUID;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.time.LocalDate;
 
 public class Billet {
     private UUID id;
@@ -13,6 +14,10 @@ public class Billet {
     private BigDecimal prixVente;
     private Date dateVente;
     private StatutBillet statutBillet;
+    private String depart ;
+    private String destination;
+    private  LocalDate dateDepart ;
+    private  LocalDate dateArrive ;
     private Contrat contrat;
 
 
@@ -20,13 +25,18 @@ public class Billet {
 
 
     public Billet(UUID id, TypeTransport typeTransport, BigDecimal prixAchat, BigDecimal prixVente,
-                  Date dateVente, StatutBillet statutBillet, Contrat contrat) {
+                  Date dateVente, StatutBillet statutBillet, String depart , String destination , LocalDate dateDepart , LocalDate dateArrivr ,  Contrat contrat) {
         this.id = id;
         this.typeTransport = typeTransport;
         this.prixAchat = prixAchat;
         this.prixVente = prixVente;
         this.dateVente = dateVente;
         this.statutBillet = statutBillet;
+        this.depart = depart ;
+        this.destination = destination;
+        this.dateDepart = dateDepart ;
+        this.dateArrive = dateArrive ;
+
         this.contrat = contrat;
     }
 
