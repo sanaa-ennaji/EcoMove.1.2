@@ -4,7 +4,6 @@ import main.java.ma.EcoMove.B1.enums.TypeTransport;
 import main.java.ma.EcoMove.B1.enums.StatutBillet;
 import java.util.UUID;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.time.LocalDate;
 
 public class Billet {
@@ -12,7 +11,7 @@ public class Billet {
     private TypeTransport typeTransport;
     private BigDecimal prixAchat;
     private BigDecimal prixVente;
-    private Date dateVente;
+    private LocalDate dateVente;
     private StatutBillet statutBillet;
     private String depart ;
     private String destination;
@@ -25,7 +24,7 @@ public class Billet {
 
 
     public Billet(UUID id, TypeTransport typeTransport, BigDecimal prixAchat, BigDecimal prixVente,
-                  Date dateVente, StatutBillet statutBillet, String depart , String destination , LocalDate dateDepart , LocalDate dateArrivr ,  Contrat contrat) {
+                  LocalDate dateVente, StatutBillet statutBillet, String depart , String destination , LocalDate dateDepart , LocalDate dateArrive ,  Contrat contrat) {
         this.id = id;
         this.typeTransport = typeTransport;
         this.prixAchat = prixAchat;
@@ -36,8 +35,8 @@ public class Billet {
         this.destination = destination;
         this.dateDepart = dateDepart ;
         this.dateArrive = dateArrive ;
-
         this.contrat = contrat;
+
     }
 
 
@@ -73,11 +72,40 @@ public class Billet {
         this.prixVente = prixVente;
     }
 
-    public Date getDateVente() {
+    public LocalDate getDateVente() {
         return dateVente;
     }
 
-    public void setDateVente(Date dateVente) {
+    public String getDepart() {
+        return depart;
+    }
+
+    public void setDepart(String depart) {
+        this.depart = depart;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public LocalDate getDateDepart() {
+        return dateDepart;
+    }
+
+    public void setDateDepart(LocalDate dateDepart) {
+        this.dateDepart = dateDepart;
+    }
+
+    public LocalDate getDateArrive() {
+        return dateArrive;
+    }
+
+
+    public void setDateVente(LocalDate dateVente) {
         this.dateVente = dateVente;
     }
 
