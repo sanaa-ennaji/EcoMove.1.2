@@ -82,17 +82,15 @@ public class BilletUI {
         System.out.println("Enter Sale Price:");
         billet.setPrixVente(new BigDecimal(scanner.nextLine()));
         System.out.println("Enter Sale Date (yyyy-mm-dd):");
-        billet.setDateVente(LocalDate.parse(scanner.nextLine())); // Use LocalDate instead of Date
+        billet.setDateVente(LocalDate.parse(scanner.nextLine()));
         System.out.println("Enter Billet Status (vendu, annule, en attente):");
         billet.setStatutBillet(StatutBillet.valueOf(scanner.nextLine().toUpperCase()));
         System.out.println("Enter Departure Location:");
         billet.setDepart(scanner.nextLine());
         System.out.println("Enter Destination Location:");
         billet.setDestination(scanner.nextLine());
-
         System.out.println("Enter Departure Date (yyyy-mm-dd):");
         billet.setDateDepart(LocalDate.parse(scanner.nextLine()));
-
         System.out.println("Enter Arrival Date (yyyy-mm-dd):");
         billet.setDateArrive(LocalDate.parse(scanner.nextLine()));
 
@@ -110,9 +108,13 @@ public class BilletUI {
             System.out.println("Contrat: " +  billet.getContrat().getId());
             System.out.println("PurchasePrice: " + billet.getPrixAchat());
             System.out.println("PrixVente: " + billet.getDateVente());
-            System.out.println("StatutBillet: " + billet.getStatutBillet());
-            System.out.println("Transport(avion, train , bus): " + billet.getTypeTransport());
-            System.out.println("Date (yyyy-mm-dd): " + billet.getDateVente());
+            System.out.println("Sale Date : " + billet.getDateVente());
+            System.out.println("Status : " + billet.getStatutBillet());
+            System.out.println("Transport Type: " + billet.getTypeTransport());
+            System.out.println("Departure Location: " + billet.getDepart());
+            System.out.println("Destination Location: " + billet.getDestination());
+            System.out.println("Departure Date: " + billet.getDateDepart());
+            System.out.println("Arrival Date: " + billet.getDateArrive());
             System.out.println("-------------");
         } else {
             System.out.println("Billet not found.");
@@ -126,10 +128,14 @@ public class BilletUI {
             System.out.println("ID: " + billet.getId());
             System.out.println("Contrat: " +  billet.getContrat().getId());
             System.out.println("Purchase Price: " + billet.getPrixAchat());
-            System.out.println("PrixVente: " + billet.getDateVente());
-            System.out.println("StatutBillet: " + billet.getStatutBillet());
-            System.out.println("Transport(avion, train , bus): " + billet.getTypeTransport());
-            System.out.println("Date (yyyy-mm-dd): " + billet.getDateVente());
+            System.out.println("PrixVente: " + billet.getPrixVente());
+            System.out.println("Sale Date: " + billet.getDateVente());
+            System.out.println("Status: " + billet.getStatutBillet());
+            System.out.println("Transport Type : " + billet.getTypeTransport());
+            System.out.println("Departure Location: " + billet.getDepart());
+            System.out.println("Destination Location: " + billet.getDestination());
+            System.out.println("Departure Date: " + billet.getDateDepart());
+            System.out.println("Arrival Date: " + billet.getDateArrive());
             System.out.println("-------------");
         } else {
             System.out.println("no Billet created yet .");
@@ -159,10 +165,22 @@ public class BilletUI {
         billet.setPrixVente(new BigDecimal(scanner.nextLine()));
 
         System.out.println("Enter new Sale Date (yyyy-mm-dd):");
-        billet.setDateVente(Date.valueOf(scanner.nextLine()));
+        billet.setDateVente(LocalDate.parse(scanner.nextLine()));
 
-        System.out.println("Enter new Billet Status:");
+        System.out.println("Enter new Billet Status (vendu, annule, en attente):");
         billet.setStatutBillet(StatutBillet.valueOf(scanner.nextLine().toUpperCase()));
+
+        System.out.println("Enter new Departure Location:");
+        billet.setDepart(scanner.nextLine());
+
+        System.out.println("Enter new Destination Location:");
+        billet.setDestination(scanner.nextLine());
+
+        System.out.println("Enter new Departure Date (yyyy-mm-dd):");
+        billet.setDateDepart(LocalDate.parse(scanner.nextLine()));
+
+        System.out.println("Enter new Arrival Date (yyyy-mm-dd):");
+        billet.setDateArrive(LocalDate.parse(scanner.nextLine()));
 
         billetService.updateBillet(billet);
         System.out.println("Billet updated successfully!");
