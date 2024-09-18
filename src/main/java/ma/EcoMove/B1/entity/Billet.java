@@ -103,7 +103,9 @@ public class Billet {
     public LocalDate getDateArrive() {
         return dateArrive;
     }
-
+    public void setDateArrive(LocalDate dateArrive) {
+        this.dateDepart = dateArrive;
+    }
 
     public void setDateVente(LocalDate dateVente) {
         this.dateVente = dateVente;
@@ -124,4 +126,6 @@ public class Billet {
     public void setContrat(Contrat contrat) {
         this.contrat = contrat;
     }
+
+
 }

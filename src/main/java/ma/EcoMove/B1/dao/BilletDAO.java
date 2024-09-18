@@ -10,7 +10,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 public class BilletDAO implements IBillet {
     private final Connection connection;
 
@@ -22,15 +21,19 @@ public class BilletDAO implements IBillet {
 
     @Override
     public void createBillet(Billet billet) throws SQLException {
-        String sql = "INSERT INTO billets (id, typeTransport, prixAchat, prixVente, dateVente, statutBillet, contrat_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO billets (id, typeTransport, prixAchat, prixVente, dateVente, statutBillet, depart, destination, dateDepart, dateArrive, contrat_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setObject(1, billet.getId());
             stmt.setString(2, billet.getTypeTransport().name().toLowerCase());
             stmt.setBigDecimal(3, billet.getPrixAchat());
             stmt.setBigDecimal(4, billet.getPrixVente());
-            stmt.setDate(5, new java.sql.Date(billet.getDateVente().getTime()));
+            stmt.setDate(5, java.sql.Date.valueOf(billet.getDateVente()));
             stmt.setString(6, billet.getStatutBillet().name().toLowerCase());
-            stmt.setObject(7, billet.getContrat().getId());
+            stmt.setString(7, billet.getDepart());
+            stmt.setString(8, billet.getDestination());
+            stmt.setDate(9, Date.valueOf(billet.getDateDepart()));
+            stmt.setDate(10, Date.valueOf(billet.getDateArrive()));
+            stmt.setObject(11, billet.getContrat().getId());
             stmt.executeUpdate();
         }
     }
@@ -60,15 +63,18 @@ public class BilletDAO implements IBillet {
             throw new SQLException("Billet with ID " + billet.getId() + " not found.");
         }
 
-        String sql = "UPDATE billets SET typeTransport = ?, prixAchat = ?, prixVente = ?, dateVente = ?, statutBillet = ?, contrat_id = ? WHERE id = ?";
+        String sql = "UPDATE billets SET typeTransport = ?, prixAchat = ?, prixVente = ?, dateVente = ?, statutBillet = ?, depart = ?, destination = ?, dateDepart = ?, dateArrive = ?, contrat_id = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, billet.getTypeTransport().name());
             stmt.setBigDecimal(2, billet.getPrixAchat());
             stmt.setBigDecimal(3, billet.getPrixVente());
-            stmt.setDate(4, new java.sql.Date(billet.getDateVente().getTime()));
-            stmt.setString(5, billet.getStatutBillet().name().toLowerCase());
-            stmt.setObject(6, billet.getContrat() != null ? billet.getContrat().getId() : null);
-            stmt.setObject(7, billet.getId());
+            stmt.setDate(5, java.sql.Date.valueOf(billet.getDateVente()));
+            stmt.setString(6, billet.getStatutBillet().name().toLowerCase());
+            stmt.setString(7, billet.getDepart());
+            stmt.setString(8, billet.getDestination());
+            stmt.setDate(9, java.sql.Date.valueOf(billet.getDateDepart()));
+            stmt.setDate(10, java.sql.Date.valueOf(billet.getDateArrive()));
+            stmt.setObject(11, billet.getContrat() != null ? billet.getContrat().getId() : null);
             stmt.executeUpdate();
         }
     }
@@ -108,13 +114,22 @@ public class BilletDAO implements IBillet {
         billet.setTypeTransport(TypeTransport.valueOf(rs.getString("typeTransport").toUpperCase()));
         billet.setPrixAchat(rs.getBigDecimal("prixAchat"));
         billet.setPrixVente(rs.getBigDecimal("prixVente"));
-        billet.setDateVente(rs.getDate("dateVente"));
+        java.sql.Date sqlDateVente = rs.getDate("dateVente");
+        billet.setDateVente(sqlDateVente != null ? sqlDateVente.toLocalDate() : null);
+
         billet.setStatutBillet(StatutBillet.valueOf(rs.getString("statutBillet").toUpperCase()));
         UUID contratId = (UUID) rs.getObject("contrat_id");
         if (contratId != null) {
             ContratDAO contratDAO = new ContratDAO();
             billet.setContrat(contratDAO.getContratById(contratId));
         }
+        billet.setDepart(rs.getString("depart"));
+        billet.setDestination(rs.getString("destination"));
+        java.sql.Date sqlDateDepart = rs.getDate("dateDepart");
+        billet.setDateDepart(sqlDateDepart != null ? sqlDateDepart.toLocalDate() : null);
+
+        java.sql.Date sqlDateArrive = rs.getDate("dateArrive");
+        billet.setDateArrive(sqlDateArrive != null ? sqlDateArrive.toLocalDate() : null);
 
         return billet;
     }

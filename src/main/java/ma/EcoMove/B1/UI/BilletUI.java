@@ -10,6 +10,7 @@ import main.java.ma.EcoMove.B1.service.IService.IContratService;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -81,9 +82,20 @@ public class BilletUI {
         System.out.println("Enter Sale Price:");
         billet.setPrixVente(new BigDecimal(scanner.nextLine()));
         System.out.println("Enter Sale Date (yyyy-mm-dd):");
-        billet.setDateVente(Date.valueOf(scanner.nextLine()));
-        System.out.println("Enter Billet Status(vendu, annule, en attente):");
+        billet.setDateVente(LocalDate.parse(scanner.nextLine())); // Use LocalDate instead of Date
+        System.out.println("Enter Billet Status (vendu, annule, en attente):");
         billet.setStatutBillet(StatutBillet.valueOf(scanner.nextLine().toUpperCase()));
+        System.out.println("Enter Departure Location:");
+        billet.setDepart(scanner.nextLine());
+        System.out.println("Enter Destination Location:");
+        billet.setDestination(scanner.nextLine());
+
+        System.out.println("Enter Departure Date (yyyy-mm-dd):");
+        billet.setDateDepart(LocalDate.parse(scanner.nextLine()));
+
+        System.out.println("Enter Arrival Date (yyyy-mm-dd):");
+        billet.setDateArrive(LocalDate.parse(scanner.nextLine()));
+
         billetService.createBillet(billet);
         System.out.println("Billet created successfully!");
     }
