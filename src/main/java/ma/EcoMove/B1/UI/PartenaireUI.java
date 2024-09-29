@@ -75,8 +75,6 @@ public class PartenaireUI {
             String zoneGeographique = scanner.nextLine();
             System.out.print("Enter conditionsSpeciales: ");
             String conditionsSpeciales = scanner.nextLine();
-            System.out.print("Enter statutPartenaire (ACTIF, INACTIF): ");
-            StatutPartenaire statutPartenaire = StatutPartenaire.valueOf(scanner.nextLine().toUpperCase());
             System.out.print("Enter dateCreation (yyyy-MM-dd): ");
             Date dateCreation = dateFormat.parse(scanner.nextLine());
 
@@ -88,7 +86,6 @@ public class PartenaireUI {
                     typeTransport,
                     zoneGeographique,
                     conditionsSpeciales,
-                    statutPartenaire,
                     dateCreation ,
                     null
 
@@ -117,7 +114,6 @@ public class PartenaireUI {
                 System.out.println("Type Transport (bus, train, avion): " + partenaire.getTypeTransport());
                 System.out.println("Zone Géographique: " + partenaire.getZoneGeographique());
                 System.out.println("Conditions Spéciales: " + partenaire.getConditionsSpeciales());
-                System.out.println("Statut Partenaire: " + partenaire.getStatutPartenaire());
                 System.out.println("Date Creation: " + partenaire.getDateCreation());
                 System.out.println("------------------------------");
             } else {
@@ -141,7 +137,6 @@ public class PartenaireUI {
                 System.out.println("typeTransport (bus, train, avion): " + partenaire.getTypeTransport());
                 System.out.println("zoneGeographique: " + partenaire.getZoneGeographique());
                 System.out.println("conditionsSpeciales: " + partenaire.getConditionsSpeciales());
-                System.out.println("statutPartenaire: " + partenaire.getStatutPartenaire());
                 System.out.println("dateCreation: " + partenaire.getDateCreation());
                 System.out.println("------------------------------");
 
@@ -182,11 +177,6 @@ public class PartenaireUI {
                 String conditionsSpeciales = scanner.nextLine();
                 if (!conditionsSpeciales.isEmpty()) {
                     partenaire.setConditionsSpeciales(conditionsSpeciales);
-                }
-                System.out.print("Enter new statutPartenaire (leave empty to keep current): ");
-                String statutPartenaireInput = scanner.nextLine();
-                if (!statutPartenaireInput.isEmpty()) {
-                    partenaire.setStatutPartenaire(StatutPartenaire.valueOf(statutPartenaireInput.toUpperCase()));
                 }
                 System.out.print("Enter new dateCreation (yyyy-MM-dd, leave empty to keep current): ");
                 String dateCreationInput = scanner.nextLine();

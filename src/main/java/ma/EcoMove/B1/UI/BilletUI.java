@@ -183,7 +183,7 @@ public class BilletUI {
         billet.setDateArrive(LocalDate.parse(scanner.nextLine()));
 
         billetService.updateBillet(billet);
-        System.out.println("Billet updated successfully!");
+        System.out.println("Billet updated successfully");
     }
 
     private void deleteBillet(Scanner scanner) throws SQLException {

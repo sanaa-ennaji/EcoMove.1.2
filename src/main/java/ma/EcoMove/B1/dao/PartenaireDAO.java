@@ -2,7 +2,6 @@ package main.java.ma.EcoMove.B1.dao;
 
 import main.java.ma.EcoMove.B1.dao.Interface.IPartenaire;
 import main.java.ma.EcoMove.B1.entity.Partenaire;
-import main.java.ma.EcoMove.B1.enums.StatutPartenaire;
 import main.java.ma.EcoMove.B1.enums.TypeTransport;
 import main.java.ma.EcoMove.B1.util.DatabaseConnection;
 
@@ -21,16 +20,15 @@ private final Connection connection;
 
     @Override
     public void createPartenaire(Partenaire partenaire) throws SQLException {
-        String sql = "INSERT INTO partenaires (id, nomCompagnie, contactCommercial, typeTransport, zoneGeographique, conditionsSpeciales, statutPartenaire, dateCreation) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO partenaires (id, nomCompagnie, contactCommercial, typeTransport, zoneGeographique, conditionsSpeciales, dateCreation) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setObject(1, partenaire.getId());
             stmt.setString(2, partenaire.getNomCompagnie());
             stmt.setString(3, partenaire.getContactCommercial());
-            stmt.setString(4, partenaire.getTypeTransport().name());
+            stmt.setString(4, partenaire.getTypeTransport().name().toLowerCase());
             stmt.setString(5, partenaire.getZoneGeographique());
             stmt.setString(6, partenaire.getConditionsSpeciales());
-            stmt.setString(7, partenaire.getStatutPartenaire().name());
-            stmt.setDate(8, new java.sql.Date(partenaire.getDateCreation().getTime()));
+            stmt.setDate(7, new java.sql.Date(partenaire.getDateCreation().getTime()));
             stmt.executeUpdate();
         }
     }
@@ -61,16 +59,15 @@ private final Connection connection;
             throw new SQLException("Partenaire with ID " + partenaire.getId() + " not found.");
         }
 
-        String sql = "UPDATE partenaires SET nomCompagnie = ?, contactCommercial = ?, typeTransport = ?, zoneGeographique = ?, conditionsSpeciales = ?, statutPartenaire = ?, dateCreation = ? WHERE id = ?";
+        String sql = "UPDATE partenaires SET nomCompagnie = ?, contactCommercial = ?, typeTransport = ?, zoneGeographique = ?, conditionsSpeciales = ?, dateCreation = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, partenaire.getNomCompagnie());
             stmt.setString(2, partenaire.getContactCommercial());
             stmt.setString(3, partenaire.getTypeTransport().name());
             stmt.setString(4, partenaire.getZoneGeographique());
             stmt.setString(5, partenaire.getConditionsSpeciales());
-            stmt.setString(6, partenaire.getStatutPartenaire().name());
-            stmt.setDate(7, new java.sql.Date(partenaire.getDateCreation().getTime()));
-            stmt.setObject(8, partenaire.getId());
+            stmt.setDate(6, new java.sql.Date(partenaire.getDateCreation().getTime()));
+            stmt.setObject(7, partenaire.getId());
             stmt.executeUpdate();
         }
     }
@@ -110,10 +107,9 @@ private final Connection connection;
         partenaire.setId((UUID) rs.getObject("id"));
         partenaire.setNomCompagnie(rs.getString("nomCompagnie"));
         partenaire.setContactCommercial(rs.getString("contactCommercial"));
-        partenaire.setTypeTransport(TypeTransport.valueOf(rs.getString("typeTransport")));
+        partenaire.setTypeTransport(TypeTransport.valueOf(rs.getString("typeTransport").toUpperCase()));
         partenaire.setZoneGeographique(rs.getString("zoneGeographique"));
         partenaire.setConditionsSpeciales(rs.getString("conditionsSpeciales"));
-        partenaire.setStatutPartenaire(StatutPartenaire.valueOf(rs.getString("statutPartenaire")));
         partenaire.setDateCreation(rs.getDate("dateCreation"));
         return partenaire;
     }

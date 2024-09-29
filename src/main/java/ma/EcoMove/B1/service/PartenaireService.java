@@ -74,9 +74,6 @@ public class PartenaireService implements IPartenaireService {
         if (partenaire.getZoneGeographique() == null || partenaire.getZoneGeographique().isEmpty()) {
             throw new SQLException("ZoneGeographique cannot be null or empty.");
         }
-        if (partenaire.getStatutPartenaire() == null) {
-            throw new SQLException("StatutPartenaire cannot be null.");
-        }
         if (partenaire.getDateCreation() == null) {
             throw new SQLException("DateCreation cannot be null.");
         }

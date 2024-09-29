@@ -1,7 +1,6 @@
 package main.java.ma.EcoMove.B1.entity;
 
 import main.java.ma.EcoMove.B1.enums.TypeTransport;
-import main.java.ma.EcoMove.B1.enums.StatutPartenaire;
 import java.util.UUID;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,6 @@ public class Partenaire {
     private TypeTransport typeTransport;
     private String zoneGeographique;
     private String conditionsSpeciales;
-    private StatutPartenaire statutPartenaire;
     private Date dateCreation;
     private List<Contrat> contrats;
 
@@ -22,7 +20,7 @@ public class Partenaire {
 
 
     public Partenaire(UUID id, String nomCompagnie, String contactCommercial, TypeTransport typeTransport,
-                      String zoneGeographique, String conditionsSpeciales, StatutPartenaire statutPartenaire,
+                      String zoneGeographique, String conditionsSpeciales,
                       Date dateCreation, List<Contrat> contrats) {
         this.id = id;
         this.nomCompagnie = nomCompagnie;
@@ -30,7 +28,6 @@ public class Partenaire {
         this.typeTransport = typeTransport;
         this.zoneGeographique = zoneGeographique;
         this.conditionsSpeciales = conditionsSpeciales;
-        this.statutPartenaire = statutPartenaire;
         this.dateCreation = dateCreation;
         this.contrats = contrats;
     }
@@ -85,13 +82,6 @@ public class Partenaire {
         this.conditionsSpeciales = conditionsSpeciales;
     }
 
-    public StatutPartenaire getStatutPartenaire() {
-        return statutPartenaire;
-    }
-
-    public void setStatutPartenaire(StatutPartenaire statutPartenaire) {
-        this.statutPartenaire = statutPartenaire;
-    }
 
     public Date getDateCreation() {
         return dateCreation;
