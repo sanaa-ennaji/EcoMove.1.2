@@ -8,9 +8,10 @@ import main.java.ma.EcoMove.B1.service.IService.IBilletService;
 import main.java.ma.EcoMove.B1.service.IService.IContratService;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
@@ -192,5 +193,39 @@ public class BilletUI {
 
         billetService.deleteBillet(id);
         System.out.println("Billet deleted successfully!");
+    }
+
+    public void searsh() {
+        Scanner scanner = new Scanner(System.in);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        while (true) {
+            System.out.println("Welcome to the Ticket Finder!");
+            System.out.println("Please enter your departure point (or type 'exit' to quit):");
+            String depart = scanner.nextLine();
+            if (depart.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.println("Please enter your destination:");
+            String destination = scanner.nextLine();
+
+            LocalDate dateDepart = null;
+            while (dateDepart == null) {
+                System.out.println("Please enter your departure date (YYYY-MM-DD):");
+                String dateInput = scanner.nextLine();
+
+
+                try {
+                    dateDepart = LocalDate.parse(dateInput, formatter);
+                } catch (DateTimeParseException e) {
+                    System.out.println("Invalid date format. Please enter the date in the format YYYY-MM-DD.");
+                }
+            }
+
+
+            billetService.searchTickets(depart, destination, dateDepart);
+        }
+        scanner.close();
     }
 }

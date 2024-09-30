@@ -15,11 +15,11 @@ public class Main {
 
         try (Connection connection = dbConnection.getConnection()) {
             if (connection != null) {
-//                ClientDAO clientDAO = new ClientDAO();
-//                ClientService clientService = new ClientService(clientDAO);
-//
-//                ClientUI clientUI = new ClientUI(clientService);
-//                clientUI.login();
+                ClientDAO clientDAO = new ClientDAO();
+               ClientService clientService = new ClientService(clientDAO);
+
+              //  ClientUI clientUI = new ClientUI(clientService);
+              //  clientUI.login();
                 PrincipalMenu principalMenu = new PrincipalMenu();
                 principalMenu.run();
 

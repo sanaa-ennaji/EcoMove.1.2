@@ -1,7 +1,13 @@
 package main.java.ma.EcoMove.B1.UI;
 
+import main.java.ma.EcoMove.B1.dao.BilletDAO;
+import main.java.ma.EcoMove.B1.dao.ContratDAO;
+import main.java.ma.EcoMove.B1.dao.PartenaireDAO;
 import main.java.ma.EcoMove.B1.entity.Client;
+import main.java.ma.EcoMove.B1.service.BilletService;
+import main.java.ma.EcoMove.B1.service.ContratService;
 import main.java.ma.EcoMove.B1.service.IService.IClientService;
+import main.java.ma.EcoMove.B1.service.PartenaireService;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -11,9 +17,23 @@ public class ClientUI {
 
     private final IClientService clientService ;
     private final Scanner scanner = new Scanner(System.in);
+    private final ContratUI contratUI;
+    private final BilletUI billetUI;
+    private final PartenaireUI partenaireUI;
 
     public ClientUI (IClientService clientService){
+        PartenaireDAO partenaireDAO = new PartenaireDAO();
+        PartenaireService partenaireService = new PartenaireService(partenaireDAO);
+        this.partenaireUI = new PartenaireUI(partenaireService);
         this.clientService = clientService;
+        ContratDAO contratDAO = new ContratDAO();
+        ContratService contratService = new ContratService(contratDAO);
+        this.contratUI= new ContratUI(contratService , partenaireService);
+
+        BilletDAO billetDAO = new BilletDAO();
+        BilletService billetService = new BilletService(billetDAO);
+        this.billetUI = new BilletUI(billetService , contratService);
+
     }
 
     public void login (){
@@ -23,6 +43,7 @@ public class ClientUI {
         Optional<Client> clientOpt = clientService.findByEmail(email);
         if (clientOpt.isPresent()){
             System.out.println("welcome back ," + clientOpt.get().getNom() + clientOpt.get().getPrenom());
+            billetUI.searsh();
 
         }else {
             System.out.println("Not found 404");
@@ -30,6 +51,7 @@ public class ClientUI {
             String response = scanner.nextLine();
             if (response.equalsIgnoreCase("y")) {
                 registerClient();
+                billetUI.searsh();
 
 
             } else {

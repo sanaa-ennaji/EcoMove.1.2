@@ -60,9 +60,7 @@ public class PrincipalMenu {
                 case 2:
                     contratUI.start();
                     break;
-
                 case 3:
-
                     billetUI.showMenu();
                     break;
                 case 4:
