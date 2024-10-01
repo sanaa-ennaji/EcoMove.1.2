@@ -1,5 +1,6 @@
 package main.java.ma.EcoMove.B1.dao;
 
+import main.java.ma.EcoMove.B1.dao.Interface.IReservation;
 import main.java.ma.EcoMove.B1.entity.Reservation;
 import main.java.ma.EcoMove.B1.util.DatabaseConnection;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ReservationDAO {
+public class ReservationDAO implements IReservation {
 
     private final Connection connection;
 

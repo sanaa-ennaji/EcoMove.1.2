@@ -3,11 +3,13 @@ package main.java.ma.EcoMove.B1.UI;
 import main.java.ma.EcoMove.B1.dao.BilletDAO;
 import main.java.ma.EcoMove.B1.dao.ContratDAO;
 import main.java.ma.EcoMove.B1.dao.PartenaireDAO;
+import main.java.ma.EcoMove.B1.dao.ReservationDAO;
 import main.java.ma.EcoMove.B1.entity.Client;
 import main.java.ma.EcoMove.B1.service.BilletService;
 import main.java.ma.EcoMove.B1.service.ContratService;
 import main.java.ma.EcoMove.B1.service.IService.IClientService;
 import main.java.ma.EcoMove.B1.service.PartenaireService;
+import main.java.ma.EcoMove.B1.service.ReservationService;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -32,6 +34,9 @@ public class ClientUI {
 
         BilletDAO billetDAO = new BilletDAO();
         BilletService billetService = new BilletService(billetDAO);
+         ReservationDAO  reservationDAO = new  ReservationDAO();
+         ReservationService reservationService = new ReservationService(reservationDAO);
+
         this.billetUI = new BilletUI(billetService , contratService , reservationService);
 
     }
@@ -43,7 +48,7 @@ public class ClientUI {
         Optional<Client> clientOpt = clientService.findByEmail(email);
         if (clientOpt.isPresent()){
             System.out.println("welcome back ," + clientOpt.get().getNom() + clientOpt.get().getPrenom());
-            billetUI.searsh();
+            billetUI.search();
 
         }else {
             System.out.println("Not found 404");
@@ -51,7 +56,7 @@ public class ClientUI {
             String response = scanner.nextLine();
             if (response.equalsIgnoreCase("y")) {
                 registerClient();
-                billetUI.searsh();
+                billetUI.search();
 
 
             } else {

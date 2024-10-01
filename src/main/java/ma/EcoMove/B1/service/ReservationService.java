@@ -1,6 +1,7 @@
 package main.java.ma.EcoMove.B1.service;
 
 
+import main.java.ma.EcoMove.B1.dao.Interface.IReservation;
 import main.java.ma.EcoMove.B1.dao.ReservationDAO;
 import main.java.ma.EcoMove.B1.entity.Reservation;
 import main.java.ma.EcoMove.B1.service.IService.IReservationService;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 public class  ReservationService  implements IReservationService {
 
-    private final ReservationDAO reservationDAO;
+    private final IReservation reservationDAO;
 
 
     public ReservationService(ReservationDAO reservationDAO) {
