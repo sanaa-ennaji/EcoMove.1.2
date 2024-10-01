@@ -37,4 +37,15 @@ public class BilletNode {
     public BigDecimal getPrixVente() {
         return prixVente;
     }
+
+    @Override
+    public String toString() {
+        return "Billet {" +
+                "Departure: '" + depart + '\'' +
+                ", Destination: '" + destination + '\'' +
+                ", Departure Date: " + dateDepart +
+                ", Arrival Date: " + dateArrive +
+                ", Sale Price: " + prixVente +
+                '}';
+    }
 }

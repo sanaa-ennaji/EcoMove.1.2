@@ -22,11 +22,35 @@ public class BilletService implements IBilletService {
 
     @Override
     public void createBillet(Billet billet) throws SQLException {
+        System.out.println("Creating Billet with details:");
+        System.out.println("Sale Date: " + billet.getDateVente());
+        System.out.println("Departure Date: " + billet.getDateDepart());
+        System.out.println("Arrival Date: " + billet.getDateArrive());
+
+        if (billet.getDateVente() == null) {
+            throw new IllegalArgumentException("Sale date cannot be null.");
+        }
+
+        if (billet.getDateDepart() == null) {
+            throw new IllegalArgumentException("Departure date cannot be null.");
+        }
+
+        if (billet.getDateArrive() == null) {
+            throw new IllegalArgumentException("Arrival date cannot be null.");
+        }
+
+
+        if (billet.getDateArrive().isBefore(billet.getDateDepart())) {
+            throw new IllegalArgumentException("Arrival date cannot be before departure date.");
+        }
+
         if (billet.getContrat() == null || billet.getContrat().getId() == null) {
             throw new IllegalArgumentException("Contrat not found or invalid.");
         }
+
         billetDAO.createBillet(billet);
     }
+
 
     @Override
     public Billet getBilletById(UUID id) throws SQLException {
@@ -48,28 +72,27 @@ public class BilletService implements IBilletService {
     public void deleteBillet(UUID id) throws SQLException {
         billetDAO.deleteBillet(id);
     }
-@Override
+    @Override
     public void searchTickets(String startPoint, String destination, LocalDate startDate) {
         try {
-
             List<Billet> billets = billetDAO.getAllBillets();
-
 
             BilletGraph graph = new BilletGraph();
             graph.buildGraph(billets);
 
-
             List<BilletNode> path = ticketFinder.findShortestPath(startPoint, destination, startDate, graph);
 
-
             if (!path.isEmpty()) {
-                System.out.println("Found path: " + path);
+                System.out.println("Tickets found for your journey:");
+                for (BilletNode billetNode : path) {
+                    System.out.println(billetNode);
+                }
             } else {
-                System.out.println("No path found.");
+                System.out.println("No tickets found for the provided route.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
-
         }
     }
+
 }

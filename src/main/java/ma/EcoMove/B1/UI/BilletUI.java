@@ -75,29 +75,37 @@ public class BilletUI {
         }
         billet.setContrat(contrat);
 
-        System.out.println("Enter Type of Transport(avion, train , bus):");
+        System.out.println("Enter Type of Transport(avion, train, bus):");
         billet.setTypeTransport(TypeTransport.valueOf(scanner.nextLine().toUpperCase()));
 
         System.out.println("Enter Purchase Price:");
         billet.setPrixAchat(new BigDecimal(scanner.nextLine()));
+
         System.out.println("Enter Sale Price:");
         billet.setPrixVente(new BigDecimal(scanner.nextLine()));
+
         System.out.println("Enter Sale Date (yyyy-mm-dd):");
         billet.setDateVente(LocalDate.parse(scanner.nextLine()));
+
         System.out.println("Enter Billet Status (vendu, annule, en attente):");
         billet.setStatutBillet(StatutBillet.valueOf(scanner.nextLine().toUpperCase()));
+
         System.out.println("Enter Departure Location:");
         billet.setDepart(scanner.nextLine());
+
         System.out.println("Enter Destination Location:");
         billet.setDestination(scanner.nextLine());
+
         System.out.println("Enter Departure Date (yyyy-mm-dd):");
         billet.setDateDepart(LocalDate.parse(scanner.nextLine()));
+
         System.out.println("Enter Arrival Date (yyyy-mm-dd):");
         billet.setDateArrive(LocalDate.parse(scanner.nextLine()));
 
         billetService.createBillet(billet);
         System.out.println("Billet created successfully!");
     }
+
 
 
     private void viewBilletById(Scanner scanner) throws SQLException {

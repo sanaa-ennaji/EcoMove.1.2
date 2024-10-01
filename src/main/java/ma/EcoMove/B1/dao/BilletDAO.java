@@ -31,8 +31,19 @@ public class BilletDAO implements IBillet {
             stmt.setString(6, billet.getStatutBillet().name().toLowerCase());
             stmt.setString(7, billet.getDepart());
             stmt.setString(8, billet.getDestination());
-            stmt.setDate(9, Date.valueOf(billet.getDateDepart()));
-            stmt.setDate(10, Date.valueOf(billet.getDateArrive()));
+           // stmt.setDate(9, Date.valueOf(billet.getDateDepart()));
+           // stmt.setDate(10, Date.valueOf(billet.getDateArrive()));
+            if (billet.getDateDepart() != null) {
+                stmt.setDate(9, java.sql.Date.valueOf(billet.getDateDepart()));
+            } else {
+                stmt.setNull(9, java.sql.Types.DATE);
+            }
+
+            if (billet.getDateArrive() != null) {
+                stmt.setDate(10, java.sql.Date.valueOf(billet.getDateArrive()));
+            } else {
+                stmt.setNull(10, java.sql.Types.DATE);
+            }
             stmt.setObject(11, billet.getContrat().getId());
             stmt.executeUpdate();
         }
