@@ -16,9 +16,8 @@ public class Billet {
     private String depart ;
     private String destination;
     private  LocalDate dateDepart ;
-    private  LocalDate dateArrive ;
+    private  LocalDate dateArrive  ;
     private Contrat contrat;
-
 
     public Billet() {}
 
@@ -104,7 +103,7 @@ public class Billet {
         return dateArrive;
     }
     public void setDateArrive(LocalDate dateArrive) {
-        this.dateDepart = dateArrive;
+        this.dateArrive = dateArrive;
     }
 
     public void setDateVente(LocalDate dateVente) {

@@ -18,10 +18,10 @@ public class Main {
                 ClientDAO clientDAO = new ClientDAO();
                ClientService clientService = new ClientService(clientDAO);
 
-                //ClientUI clientUI = new ClientUI(clientService);
-              //  clientUI.login();
-                PrincipalMenu principalMenu = new PrincipalMenu();
-                principalMenu.run();
+                ClientUI clientUI = new ClientUI(clientService);
+                clientUI.login();
+             //   PrincipalMenu principalMenu = new PrincipalMenu();
+              //  principalMenu.run();
 
             } else {
                 System.out.println("Failed to connect to the database.");

@@ -1,6 +1,7 @@
 package main.java.ma.EcoMove.B1.service.IService;
 
 import main.java.ma.EcoMove.B1.entity.Billet;
+import main.java.ma.EcoMove.B1.entity.BilletNode;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -13,5 +14,5 @@ public interface IBilletService {
     List<Billet> getAllBillets() throws SQLException;
     void updateBillet(Billet billet) throws SQLException;
     void deleteBillet(UUID id) throws SQLException;
-    void searchTickets(String startPoint, String destination, LocalDate startDate);
+    List<BilletNode> searchTickets(String startPoint, String destination, LocalDate startDate);
 }

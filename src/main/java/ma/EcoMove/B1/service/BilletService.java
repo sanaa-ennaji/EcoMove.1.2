@@ -23,30 +23,7 @@ public class BilletService implements IBilletService {
     @Override
     public void createBillet(Billet billet) throws SQLException {
         System.out.println("Creating Billet with details:");
-        System.out.println("Sale Date: " + billet.getDateVente());
-        System.out.println("Departure Date: " + billet.getDateDepart());
         System.out.println("Arrival Date: " + billet.getDateArrive());
-
-        if (billet.getDateVente() == null) {
-            throw new IllegalArgumentException("Sale date cannot be null.");
-        }
-
-        if (billet.getDateDepart() == null) {
-            throw new IllegalArgumentException("Departure date cannot be null.");
-        }
-
-        if (billet.getDateArrive() == null) {
-            throw new IllegalArgumentException("Arrival date cannot be null.");
-        }
-
-
-        if (billet.getDateArrive().isBefore(billet.getDateDepart())) {
-            throw new IllegalArgumentException("Arrival date cannot be before departure date.");
-        }
-
-        if (billet.getContrat() == null || billet.getContrat().getId() == null) {
-            throw new IllegalArgumentException("Contrat not found or invalid.");
-        }
 
         billetDAO.createBillet(billet);
     }
@@ -73,7 +50,7 @@ public class BilletService implements IBilletService {
         billetDAO.deleteBillet(id);
     }
     @Override
-    public void searchTickets(String startPoint, String destination, LocalDate startDate) {
+    public List<BilletNode> searchTickets(String startPoint, String destination, LocalDate startDate) {
         try {
             List<Billet> billets = billetDAO.getAllBillets();
 
@@ -93,6 +70,7 @@ public class BilletService implements IBilletService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 }

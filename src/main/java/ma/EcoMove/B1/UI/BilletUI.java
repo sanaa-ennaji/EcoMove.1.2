@@ -1,12 +1,13 @@
 package main.java.ma.EcoMove.B1.UI;
 
 import main.java.ma.EcoMove.B1.entity.Billet;
+import main.java.ma.EcoMove.B1.entity.BilletNode;
 import main.java.ma.EcoMove.B1.entity.Contrat;
 import main.java.ma.EcoMove.B1.enums.TypeTransport;
 import main.java.ma.EcoMove.B1.enums.StatutBillet;
 import main.java.ma.EcoMove.B1.service.IService.IBilletService;
 import main.java.ma.EcoMove.B1.service.IService.IContratService;
-
+import main.java.ma.EcoMove.B1.service.ReservationService;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -19,9 +20,12 @@ import java.util.UUID;
 public class BilletUI {
     private final IBilletService billetService;
     private final IContratService contratService;
-    public BilletUI(IBilletService billetService, IContratService contratService) {
+    private final ReservationService reservationService ;
+
+    public BilletUI(IBilletService billetService, IContratService contratService,ReservationService reservationService ) {
         this.billetService = billetService ;
         this.contratService = contratService ;
+        this.reservationService = reservationService;
     }
 
     public void showMenu() throws SQLException {
@@ -75,7 +79,7 @@ public class BilletUI {
         }
         billet.setContrat(contrat);
 
-        System.out.println("Enter Type of Transport(avion, train, bus):");
+        System.out.println("Enter Type of Transport (avion, train, bus):");
         billet.setTypeTransport(TypeTransport.valueOf(scanner.nextLine().toUpperCase()));
 
         System.out.println("Enter Purchase Price:");
@@ -84,8 +88,14 @@ public class BilletUI {
         System.out.println("Enter Sale Price:");
         billet.setPrixVente(new BigDecimal(scanner.nextLine()));
 
+
         System.out.println("Enter Sale Date (yyyy-mm-dd):");
-        billet.setDateVente(LocalDate.parse(scanner.nextLine()));
+        String saleDateInput = scanner.nextLine();
+        if (saleDateInput.isEmpty()) {
+            System.out.println("Sale date cannot be empty.");
+            return;
+        }
+        billet.setDateVente(LocalDate.parse(saleDateInput));
 
         System.out.println("Enter Billet Status (vendu, annule, en attente):");
         billet.setStatutBillet(StatutBillet.valueOf(scanner.nextLine().toUpperCase()));
@@ -97,14 +107,31 @@ public class BilletUI {
         billet.setDestination(scanner.nextLine());
 
         System.out.println("Enter Departure Date (yyyy-mm-dd):");
-        billet.setDateDepart(LocalDate.parse(scanner.nextLine()));
+        String departureDateInput = scanner.nextLine();
+        if (departureDateInput.isEmpty()) {
+            System.out.println("Departure date cannot be empty.");
+            return;
+        }
+        billet.setDateDepart(LocalDate.parse(departureDateInput));
+
 
         System.out.println("Enter Arrival Date (yyyy-mm-dd):");
-        billet.setDateArrive(LocalDate.parse(scanner.nextLine()));
+        String arrivalDateInput = scanner.nextLine();
+        if (arrivalDateInput.isEmpty()) {
+            System.out.println("Arrival date cannot be empty.");
+            return;
+        }
+        billet.setDateArrive(LocalDate.parse(arrivalDateInput));
 
-        billetService.createBillet(billet);
-        System.out.println("Billet created successfully!");
+
+        try {
+            billetService.createBillet(billet);
+            System.out.println("Billet created successfully!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error creating billet: " + e.getMessage());
+        }
     }
+
 
 
 
@@ -203,13 +230,13 @@ public class BilletUI {
         System.out.println("Billet deleted successfully!");
     }
 
-    public void searsh() {
+    public void search() {
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         while (true) {
             System.out.println("Welcome to the Ticket Finder!");
-            System.out.println("Please enter your departure point (or type 'exit' to quit):");
+            System.out.println("Please enter your departure point:");
             String depart = scanner.nextLine();
             if (depart.equalsIgnoreCase("exit")) {
                 break;
@@ -220,10 +247,8 @@ public class BilletUI {
 
             LocalDate dateDepart = null;
             while (dateDepart == null) {
-                System.out.println("Please enter your departure date (YYYY-MM-DD):");
+                System.out.println("Please enter your departure date YYYY-MM-DD:");
                 String dateInput = scanner.nextLine();
-
-
                 try {
                     dateDepart = LocalDate.parse(dateInput, formatter);
                 } catch (DateTimeParseException e) {
@@ -231,9 +256,44 @@ public class BilletUI {
                 }
             }
 
+            List<BilletNode> availableTickets = billetService.searchTickets(depart, destination, dateDepart);
+            if (availableTickets.isEmpty()) {
+                System.out.println("No tickets found for the given criteria.");
+            } else {
+                System.out.println("Tickets found:");
+                for (BilletNode ticket : availableTickets) {
+                    System.out.println(ticket);
+                }
 
-            billetService.searchTickets(depart, destination, dateDepart);
+                // Ask the user if they want to reserve a ticket
+                System.out.println("Would you like to reserve a ticket? (yes/no)");
+                String response = scanner.nextLine();
+                if (response.equalsIgnoreCase("yes")) {
+                    System.out.println("Please enter the ID of the ticket you would like to reserve:");
+                    int ticketIndex = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (ticketIndex >= 0 && ticketIndex < availableTickets.size()) {
+                        BilletNode selectedTicket = availableTickets.get(ticketIndex);
+                        createReservationForTicket(selectedTicket);
+                    } else {
+                        System.out.println("Invalid ticket selection.");
+                    }
+                }
+            }
+            break;
         }
         scanner.close();
     }
+
+    private void createReservationForTicket(BilletNode ticket) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your client ID:");
+        String clientIdInput = scanner.nextLine();
+        UUID clientId = UUID.fromString(clientIdInput);
+
+
+        reservationService.createReservation(clientId, "reserved", ticket.getPrixVente());
+    }
 }
+

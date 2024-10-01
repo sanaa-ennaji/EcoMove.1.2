@@ -32,7 +32,7 @@ public class ClientUI {
 
         BilletDAO billetDAO = new BilletDAO();
         BilletService billetService = new BilletService(billetDAO);
-        this.billetUI = new BilletUI(billetService , contratService);
+        this.billetUI = new BilletUI(billetService , contratService , reservationService);
 
     }
 
