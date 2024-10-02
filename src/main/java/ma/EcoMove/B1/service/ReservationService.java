@@ -27,7 +27,7 @@ public class  ReservationService  implements IReservationService {
         try {
             Reservation reservation = new Reservation(id ,clientId,dateReservation, statutReservation, prix);
             reservationDAO.createReservation(reservation);
-            System.out.println("Reservation created successfully.");
+           // System.out.println("Reservation created successfully.");
         } catch (SQLException e) {
             System.out.println("Error creating reservation: " + e.getMessage());
         }

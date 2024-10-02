@@ -259,25 +259,23 @@ public class BilletUI {
 
             List<BilletNode> availableTickets = billetService.searchTickets(depart, destination, dateDepart);
 
-            if (availableTickets == null || availableTickets.isEmpty()) {
-                System.out.println("No tickets found for the given criteria.");
-            } else {
-                System.out.println("Tickets found:");
-                for (int i = 0; i < availableTickets.size(); i++) {
-                    System.out.println(i + ": " + availableTickets.get(i));
-                }
+         if (availableTickets == null || availableTickets.isEmpty()) {
+          System.out.println("No tickets found for the given criteria.");
+          }
 
-                System.out.println("Would you like to reserve the first available ticket? (yes/no)");
+                System.out.println("Would you like to reserve the first available ticket? (y/n)");
                 String response = scanner.nextLine();
-                if (response.equalsIgnoreCase("yes")) {
+                if (response.equalsIgnoreCase("y")) {
                     BilletNode selectedTicket = availableTickets.get(0);
                     createReservationForTicket(selectedTicket, clientId);
                 }
-            }
             break;
-        }
+            }
+
+
         scanner.close();
     }
+
 
 
 
@@ -288,7 +286,7 @@ public class BilletUI {
 
 
         reservationService.createReservation(id, clientId, dateReservation, "enattente", ticket.getPrixVente());
-        System.out.println("Ticket reserved successfully!");
+       System.out.println("Ticket reserved successfully!");
     }
 
 
