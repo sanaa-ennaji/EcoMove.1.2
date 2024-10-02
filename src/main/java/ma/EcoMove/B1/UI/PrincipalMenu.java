@@ -1,12 +1,6 @@
 package main.java.ma.EcoMove.B1.UI;
-import main.java.ma.EcoMove.B1.dao.BilletDAO;
-import main.java.ma.EcoMove.B1.dao.ContratDAO;
-import main.java.ma.EcoMove.B1.dao.PartenaireDAO;
-import main.java.ma.EcoMove.B1.dao.PromotionDAO;
-import main.java.ma.EcoMove.B1.service.BilletService;
-import main.java.ma.EcoMove.B1.service.ContratService;
-import main.java.ma.EcoMove.B1.service.PartenaireService;
-import main.java.ma.EcoMove.B1.service.PromotionService;
+import main.java.ma.EcoMove.B1.dao.*;
+import main.java.ma.EcoMove.B1.service.*;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -30,7 +24,9 @@ public class PrincipalMenu {
 
         BilletDAO billetDAO = new BilletDAO();
         BilletService  billetService = new BilletService(billetDAO);
-        this.billetUI = new BilletUI(billetService , contratService);
+        ReservationDAO reservationDAO = new  ReservationDAO();
+        ReservationService reservationService = new ReservationService(reservationDAO);
+        this.billetUI = new BilletUI(billetService , contratService , reservationService);
 
         PromotionDAO promotionDAO = new PromotionDAO();
         PromotionService promotionService = new PromotionService(promotionDAO);

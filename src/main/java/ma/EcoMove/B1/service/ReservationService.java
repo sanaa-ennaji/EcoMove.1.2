@@ -8,6 +8,8 @@ import main.java.ma.EcoMove.B1.service.IService.IReservationService;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,9 +23,9 @@ public class  ReservationService  implements IReservationService {
     }
 
 
-    public void createReservation(UUID clientId, String statutReservation, BigDecimal prix) {
+    public void createReservation(UUID id ,UUID clientId, LocalDateTime dateReservation, String statutReservation, BigDecimal prix) {
         try {
-            Reservation reservation = new Reservation(clientId, statutReservation, prix);
+            Reservation reservation = new Reservation(id ,clientId,dateReservation, statutReservation, prix);
             reservationDAO.createReservation(reservation);
             System.out.println("Reservation created successfully.");
         } catch (SQLException e) {

@@ -8,6 +8,7 @@ import main.java.ma.EcoMove.B1.service.IService.IBilletService;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -51,13 +52,14 @@ public class BilletService implements IBilletService {
     }
     @Override
     public List<BilletNode> searchTickets(String startPoint, String destination, LocalDate startDate) {
+        List<BilletNode> path = new ArrayList<>();
         try {
             List<Billet> billets = billetDAO.getAllBillets();
 
             BilletGraph graph = new BilletGraph();
             graph.buildGraph(billets);
 
-            List<BilletNode> path = ticketFinder.findShortestPath(startPoint, destination, startDate, graph);
+            path = ticketFinder.findShortestPath(startPoint, destination, startDate, graph);
 
             if (!path.isEmpty()) {
                 System.out.println("Tickets found for your journey:");
@@ -70,7 +72,9 @@ public class BilletService implements IBilletService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+
+
+        return path;
     }
 
 }

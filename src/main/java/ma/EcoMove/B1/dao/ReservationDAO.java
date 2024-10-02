@@ -19,7 +19,7 @@ public class ReservationDAO implements IReservation {
         this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
-
+@Override
     public void createReservation(Reservation reservation) throws SQLException {
         String sql = "INSERT INTO reservations (id, client_id, dateReservation, statutReservation, prix) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -31,7 +31,7 @@ public class ReservationDAO implements IReservation {
             stmt.executeUpdate();
         }
     }
-
+@Override
     public Reservation getReservationById(UUID id) throws SQLException {
         String sql = "SELECT * FROM reservations WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -43,6 +43,7 @@ public class ReservationDAO implements IReservation {
         }
         return null;
     }
+    @Override
     public List<Reservation> getAllReservations() throws SQLException {
         String sql = "SELECT * FROM reservations";
         List<Reservation> reservations = new ArrayList<>();
@@ -54,7 +55,7 @@ public class ReservationDAO implements IReservation {
         }
         return reservations;
     }
-
+@Override
     public void updateReservation(Reservation reservation) throws SQLException {
         String sql = "UPDATE reservations SET client_id = ?, dateReservation = ?, statutReservation = ?, prix = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -67,7 +68,7 @@ public class ReservationDAO implements IReservation {
         }
     }
 
-
+@Override
     public void deleteReservation(UUID id) throws SQLException {
         String sql = "DELETE FROM reservations WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

@@ -11,6 +11,7 @@ import main.java.ma.EcoMove.B1.service.ReservationService;
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -230,7 +231,7 @@ public class BilletUI {
         System.out.println("Billet deleted successfully!");
     }
 
-    public void search() {
+    public void search(UUID clientId) {
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -257,28 +258,20 @@ public class BilletUI {
             }
 
             List<BilletNode> availableTickets = billetService.searchTickets(depart, destination, dateDepart);
-            if (availableTickets.isEmpty()) {
+
+            if (availableTickets == null || availableTickets.isEmpty()) {
                 System.out.println("No tickets found for the given criteria.");
             } else {
                 System.out.println("Tickets found:");
-                for (BilletNode ticket : availableTickets) {
-                    System.out.println(ticket);
+                for (int i = 0; i < availableTickets.size(); i++) {
+                    System.out.println(i + ": " + availableTickets.get(i));
                 }
 
-                // Ask the user if they want to reserve a ticket
-                System.out.println("Would you like to reserve a ticket? (yes/no)");
+                System.out.println("Would you like to reserve the first available ticket? (yes/no)");
                 String response = scanner.nextLine();
                 if (response.equalsIgnoreCase("yes")) {
-                    System.out.println("Please enter the ID of the ticket you would like to reserve:");
-                    int ticketIndex = scanner.nextInt();
-                    scanner.nextLine();
-
-                    if (ticketIndex >= 0 && ticketIndex < availableTickets.size()) {
-                        BilletNode selectedTicket = availableTickets.get(ticketIndex);
-                        createReservationForTicket(selectedTicket);
-                    } else {
-                        System.out.println("Invalid ticket selection.");
-                    }
+                    BilletNode selectedTicket = availableTickets.get(0);
+                    createReservationForTicket(selectedTicket, clientId);
                 }
             }
             break;
@@ -286,15 +279,18 @@ public class BilletUI {
         scanner.close();
     }
 
-    private void createReservationForTicket(BilletNode ticket) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your client ID:");
-        String clientIdInput = scanner.nextLine();
-        UUID clientId = UUID.fromString(clientIdInput);
 
 
-        reservationService.createReservation(clientId, "reserved", ticket.getPrixVente());
+
+    private void createReservationForTicket(BilletNode ticket, UUID clientId) {
+        UUID id = UUID.randomUUID();
+        LocalDateTime dateReservation = LocalDateTime.now();
+
+
+        reservationService.createReservation(id, clientId, dateReservation, "enattente", ticket.getPrixVente());
+        System.out.println("Ticket reserved successfully!");
     }
+
 
 
 }

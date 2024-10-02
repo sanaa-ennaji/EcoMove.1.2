@@ -41,33 +41,31 @@ public class ClientUI {
 
     }
 
-    public void login (){
+    public void login() {
         System.out.println("--------------Client Login ----------------");
-        System.out.print("enter your email to login: ");
+        System.out.print("Enter your email to login: ");
         String email = scanner.nextLine().trim();
         Optional<Client> clientOpt = clientService.findByEmail(email);
-        if (clientOpt.isPresent()){
-            System.out.println("welcome back ," + clientOpt.get().getNom() + clientOpt.get().getPrenom());
-            billetUI.search();
 
-        }else {
+        if (clientOpt.isPresent()) {
+            Client client = clientOpt.get();
+            System.out.println("Welcome back, " + client.getNom() + " " + client.getPrenom());
+
+            billetUI.search(client.getId());
+
+        } else {
             System.out.println("Not found 404");
-            System.out.print("would you like to create an account ? (Y/N): ");
+            System.out.print("Would you like to create an account? (Y/N): ");
             String response = scanner.nextLine();
+
             if (response.equalsIgnoreCase("y")) {
                 registerClient();
-                billetUI.search();
-
-
             } else {
-
-                System.out.println("exit");
-
-
+                System.out.println("Exit");
             }
         }
-
     }
+
 
     private void registerClient() {
         System.out.print("email: ");
@@ -85,6 +83,7 @@ public class ClientUI {
         Client newClient = clientService.registerClient(nom, prenom, email, telephone, LocalDate.now());
 
         System.out.println("Account created successfull ! Welcome, " + newClient.getNom() + "!");
+        billetUI.search(newClient.getId());
     }
 
 }

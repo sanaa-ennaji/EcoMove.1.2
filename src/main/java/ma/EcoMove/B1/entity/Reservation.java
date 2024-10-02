@@ -21,8 +21,9 @@ public class Reservation {
         this.prix = prix;
     }
 
-    public Reservation(UUID clientId, String statutReservation, BigDecimal prix) {
-    }
+
+
+
 
     public UUID getId() {
         return id;
